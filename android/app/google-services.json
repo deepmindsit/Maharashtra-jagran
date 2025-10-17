@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "814570361391",
+    "project_id": "maharashtra-jagran",
+    "storage_bucket": "maharashtra-jagran.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814570361391:android:a653e263bb524ef2ebacda",
+        "android_client_info": {
+          "package_name": "com.mjagran.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-SBGWZvRg9Dd1h8jTxN25fEhFjEYtfCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

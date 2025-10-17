@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.mjagran.android",
+    "sha256_cert_fingerprints":
+    ["71:63:1F:42:DD:2B:13:66:83:A8:9A:80:68:76:DC:2B:7D:34:46:A1:58:B7:B2:20:F8:D8:F3:5A:44:E9:5B:BE"]
+  }
+}]
