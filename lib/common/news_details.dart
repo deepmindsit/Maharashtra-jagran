@@ -31,45 +31,51 @@ class _NewsDetailsState extends State<NewsDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      appBar: _buildAppBar(),
-      body: Obx(
-        () =>
-            controller.isLoading.isTrue
-                ? LoadingWidget(color: primaryColor)
-                : RefreshIndicator(
-                  onRefresh: () async {
-                    await controller.getNewsDetails(
-                      Get.arguments['newsId'].toString(),
-                    );
-                  },
-                  child: SafeArea(
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Header Section
-                              _buildHeaderSection(),
-                              // Image Section
-                              _buildImageSection(),
-                              // Content Section
-                              _buildContentSection(),
-                            ],
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (_, r) {
+        Get.offAllNamed(Routes.mainScreen);
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FA),
+        appBar: _buildAppBar(),
+        body: Obx(
+          () =>
+              controller.isLoading.isTrue
+                  ? LoadingWidget(color: primaryColor)
+                  : RefreshIndicator(
+                    onRefresh: () async {
+                      await controller.getNewsDetails(
+                        Get.arguments['newsId'].toString(),
+                      );
+                    },
+                    child: SafeArea(
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Header Section
+                                _buildHeaderSection(),
+                                // Image Section
+                                _buildImageSection(),
+                                // Content Section
+                                _buildContentSection(),
+                              ],
+                            ),
                           ),
-                        ),
-                        // Comments Section
-                        _buildCommentsSection(),
-                        // Related News Section
-                        _buildRelatedNewsSection(),
-                      ],
+                          // Comments Section
+                          _buildCommentsSection(),
+                          // Related News Section
+                          _buildRelatedNewsSection(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+        ),
+        // bottomNavigationBar: _buildBottomActionBar(),
       ),
-      // bottomNavigationBar: _buildBottomActionBar(),
     );
   }
 
@@ -81,6 +87,11 @@ class _NewsDetailsState extends State<NewsDetails> {
       backgroundColor: primaryColor,
       title: Image.asset(Images.logoWhite, width: 0.5.sw),
       centerTitle: true,
+      leading: BackButton(
+        onPressed: () {
+          Get.offAllNamed(Routes.mainScreen);
+        },
+      ),
       actions: [
         Obx(
           () => IconButton(
@@ -220,8 +231,7 @@ class _NewsDetailsState extends State<NewsDetails> {
             FadeInImage(
               placeholder: AssetImage(Images.defaultImage),
               image: NetworkImage(
-                controller.detailsData['image']?.toString() ??
-                    'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+                controller.detailsData['image']?.toString() ?? '',
               ),
               imageErrorBuilder: (context, error, stackTrace) {
                 return Container(
@@ -400,16 +410,14 @@ class _NewsDetailsState extends State<NewsDetails> {
                 ),
               ),
               title: CustomText(
-                title:
-                    controller.comments[index]['comment_by'] ??
-                    'Maharashtra Jagran',
+                title: controller.comments[index]['comment_by'] ?? '',
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
                 textAlign: TextAlign.start,
                 color: const Color(0xFF1F2937),
               ),
               subtitle: CustomText(
-                title: controller.comments[index]['date'] ?? 'ऑगस्ट 19, 2025',
+                title: controller.comments[index]['date'] ?? '',
                 fontSize: 12.sp,
                 textAlign: TextAlign.start,
                 color: const Color(0xFF6B7280),
@@ -499,7 +507,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                         ? LoadingWidget(color: Colors.white)
                         : CustomText(
                           title: "सबमिट",
-                    fontSize: 16.sp,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
@@ -545,11 +553,9 @@ class _NewsDetailsState extends State<NewsDetails> {
                     },
                     child: MainNewsCard(
                       isBookmarked: news['is_bookmarked'] ?? false,
-                      image:
-                          news['image']?.toString() ??
-                          'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+                      image: news['image']?.toString() ?? '',
                       title: news['title']?.toString() ?? "-",
-                      date: news['date']?.toString() ?? "ऑगस्ट 19, 2025",
+                      date: news['date']?.toString() ?? "",
                       comment: news['comments_count']?.toString() ?? "0",
                       onTap: () async {
                         if (!await LocalStorage().isDemo()) {
@@ -939,7 +945,7 @@ class _NewsDetailsState extends State<NewsDetails> {
 //             color: primaryGrey,
 //           ),
 //           subtitle: CustomText(
-//             title: 'ऑगस्ट 19, 2025',
+//             title: '',
 //             fontSize: 12.sp,
 //             textAlign: TextAlign.start,
 //             color: primaryLightGrey,

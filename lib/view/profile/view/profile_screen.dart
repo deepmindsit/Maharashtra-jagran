@@ -171,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           textAlign: TextAlign.start,
                         ),
                         trailing: CustomText(
-                          title: '1.0.3',
+                          title: '1.0.5',
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           textAlign: TextAlign.start,

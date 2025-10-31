@@ -185,8 +185,7 @@ class NotificationTile extends StatelessWidget {
           zoomWidget: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
-              notification['featured_image'] ??
-                  'https://static-00.iconduck.com/assets.00/person-icon-2048x2048-wiaps1jt.png',
+              notification['featured_image'] ?? '',
               fit: BoxFit.cover,
               errorBuilder:
                   (context, error, stackTrace) => Container(

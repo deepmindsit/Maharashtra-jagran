@@ -16,7 +16,7 @@ class SearchDataController extends GetxController {
   final isLoadMoreRunning = false.obs;
   final hasMore = true.obs;
 
-  Future<void> getNewsBySearch({bool isRefresh = false}) async {
+  Future<void> getNewsBySearch(String query, {bool isRefresh = false}) async {
     if (isFirstLoadRunning.value) return;
 
     page.value = 1;
@@ -24,10 +24,12 @@ class SearchDataController extends GetxController {
     searchList.clear();
 
     isFirstLoadRunning.value = true;
-    final userId = await LocalStorage.getString('user_id');
     try {
+      log(searchController.text, name: 'keyword');
+      final userId = await LocalStorage.getString('user_id');
       final res = await _apiService.newsBySearch(
-        searchController.text.trim(),
+        query,
+        // searchController.text.trim(),
         page.toString(),
         perPage.toString(),
         userId,
@@ -47,16 +49,17 @@ class SearchDataController extends GetxController {
     }
   }
 
-  Future<void> getNewsMoreSearch() async {
+  Future<void> getNewsMoreSearch(String query) async {
     if (hasMore.value == true &&
         isFirstLoadRunning.value == false &&
         isLoadMoreRunning.value == false) {
       isLoadMoreRunning.value = true;
       page.value += 1;
-      final userId = await LocalStorage.getString('user_id');
       try {
+        final userId = await LocalStorage.getString('user_id');
         final res = await _apiService.newsBySearch(
-          searchController.text.trim(),
+          query,
+          // searchController.text.trim(),
           page.toString(),
           perPage.toString(),
           userId,

@@ -9,6 +9,20 @@ class NewsListBySearch extends StatefulWidget {
 
 class _NewsListBySearchState extends State<NewsListBySearch> {
   final controller = getIt<SearchDataController>();
+  Timer? _debounce;
+
+  @override
+  void initState() {
+    controller.searchController.clear();
+    controller.searchList.clear();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,29 +42,58 @@ class _NewsListBySearchState extends State<NewsListBySearch> {
             if (scrollNotification is ScrollEndNotification &&
                 scrollNotification.metrics.pixels ==
                     scrollNotification.metrics.maxScrollExtent) {
-              controller.getNewsMoreSearch();
+              controller.getNewsMoreSearch(
+                controller.searchController.text.trim(),
+              );
             }
             return true;
           },
-          child: ListView(
-            padding: EdgeInsets.all(16.r),
+          child: Column(
+            // padding: EdgeInsets.all(16.r),
             children: [
-              _buildInputField(
-                onChanged: (v) async => await controller.getNewsBySearch(),
-                label: 'शोधा *',
-                controller1: controller.searchController,
-                validator:
-                    (value) =>
-                        value!.trim().isEmpty ? 'कृपया नाव शोधा'.tr : null,
-                hintText: 'शोधा',
+              Padding(
+                padding: EdgeInsets.all(16.r),
+                child: _buildInputField(
+                  onChanged: (v) {
+                    if (_debounce?.isActive ?? false) _debounce!.cancel();
+                    _debounce = Timer(const Duration(milliseconds: 500), () {
+                      controller.getNewsBySearch(v);
+                    });
+                  },
+                  label: 'शोधा *',
+                  controller1: controller.searchController,
+                  validator:
+                      (value) =>
+                          value!.trim().isEmpty ? 'कृपया नाव शोधा'.tr : null,
+                  hintText: 'शोधा',
+                ),
               ),
-              controller.isFirstLoadRunning.isTrue
-                  ? Expanded(child: LoadingWidget(color: primaryColor))
-                  : controller.searchList.isEmpty
-                  ? noDataFound()
-                  : _buildMaharashtraNews(controller.searchList),
+              // _buildInputField(
+              //   onChanged: (v) async => await controller.getNewsBySearch(),
+              //   label: 'शोधा *',
+              //   controller1: controller.searchController,
+              //   validator:
+              //       (value) =>
+              //           value!.trim().isEmpty ? 'कृपया नाव शोधा'.tr : null,
+              //   hintText: 'शोधा',
+              // ),
+              Expanded(
+                child:
+                    controller.isFirstLoadRunning.isTrue
+                        ? Center(child: LoadingWidget(color: primaryColor))
+                        : controller.searchList.isEmpty
+                        ? noDataFound()
+                        : ListView(
+                          padding: EdgeInsets.symmetric(horizontal: 16.r),
+                          children: [
+                            _buildMaharashtraNews(controller.searchList),
+                            buildLoader(),
+                          ],
+                        ),
 
-              controller.searchList.isEmpty ? const SizedBox() : buildLoader(),
+                // _buildMaharashtraNews(controller.searchList),
+              ),
+              // if (controller.searchList.isNotEmpty) buildLoader(),
             ],
           ),
         ),
@@ -142,7 +185,6 @@ class _NewsListBySearchState extends State<NewsListBySearch> {
   static Widget _buildMaharashtraNews(dynamic data) {
     return ListView.builder(
       shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
       physics: NeverScrollableScrollPhysics(),
       itemCount: data.length,
       itemBuilder: (context, index) {
@@ -156,11 +198,9 @@ class _NewsListBySearchState extends State<NewsListBySearch> {
           },
           child: HorizontalNewsCard(
             isBookmarked: news['is_bookmarked'] ?? false,
-            image:
-                news['image']?.toString() ??
-                'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+            image: news['image']?.toString() ?? '',
             title: news['title']?.toString() ?? "-",
-            date: news['date']?.toString() ?? "ऑगस्ट 19, 2025",
+            date: news['date']?.toString() ?? "",
             comment: news['comments_count']?.toString() ?? "0",
           ),
         );

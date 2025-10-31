@@ -41,6 +41,7 @@ class DeepLinkController extends GetxController {
     }
 
     if (id != null) {
+      NotificationService.hasHandledNotificationNavigation = true;
       Get.toNamed(Routes.newsDetails, arguments: {'newsId': id});
     }
   }

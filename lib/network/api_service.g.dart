@@ -311,7 +311,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://maharashtrajagran.com/api/get_news_by_keyword.php',
+            'https://maharashtrajagran.com/api/global_search.php',
             queryParameters: queryParameters,
             data: _data,
           )

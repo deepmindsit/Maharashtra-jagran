@@ -113,11 +113,9 @@ class _BookmarkState extends State<Bookmark> {
           },
           child: HorizontalNewsCard(
             isBookmarked: bookmark['is_bookmarked'] ?? false,
-            image:
-                bookmark['featured_image'] ??
-                'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+            image: bookmark['featured_image'] ?? '',
             title: bookmark['title'] ?? "-",
-            date: bookmark['date_published'] ?? "ऑगस्ट 19, 2025",
+            date: bookmark['date_published'] ?? "",
             comment: bookmark['comments_count'] ?? '0',
             onTap: () async {
               final isCurrentlyBookmarked = bookmark['is_bookmarked'] ?? false;

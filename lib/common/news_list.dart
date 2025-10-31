@@ -80,15 +80,15 @@ class _NewsListState extends State<NewsList> {
                                 image:
                                     controller.newsList.first['image']
                                         ?.toString() ??
-                                    'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+                                    '',
                                 title:
                                     controller.newsList.first['title']
                                         ?.toString() ??
                                     "-",
                                 date:
-                                    controller.newsList.first['date_published']
+                                    controller.newsList.first['date']
                                         ?.toString() ??
-                                    "ऑगस्ट 19, 2025",
+                                    "",
                                 comment:
                                     controller.newsList.first['comments_count']
                                         ?.toString() ??
@@ -205,11 +205,9 @@ class _NewsListState extends State<NewsList> {
           },
           child: HorizontalNewsCard(
             isBookmarked: news['is_bookmarked'] ?? false,
-            image:
-                news['image']?.toString() ??
-                'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+            image: news['image']?.toString() ?? '',
             title: news['title']?.toString() ?? "-",
-            date: news['date']?.toString() ?? "ऑगस्ट 19, 2025",
+            date: news['date']?.toString() ?? "",
             comment: news['comments_count']?.toString() ?? "0",
             onTap: () async {
               if (!await LocalStorage().isDemo()) {

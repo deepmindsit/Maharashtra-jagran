@@ -139,7 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: InfiniteMarquee(
                       frequency: const Duration(milliseconds: 30),
                       itemBuilder: (context, index) {
-                        final item = controller.marqueeData[index % controller.marqueeData.length];
+                        final item =
+                            controller.marqueeData[index %
+                                controller.marqueeData.length];
                         return Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -187,22 +189,22 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // GestureDetector(
-        //   onTap: () => Get.toNamed(Routes.newsListBySearch),
-        //   child: Container(
-        //     padding: EdgeInsets.all(8.w),
-        //     margin: EdgeInsets.all(8.w).copyWith(right: 12),
-        //     decoration: BoxDecoration(
-        //       color: Colors.white.withValues(alpha: 0.4),
-        //       shape: BoxShape.circle,
-        //     ),
-        //     child: Icon(
-        //       HugeIcons.strokeRoundedSearch01,
-        //       color: Colors.white,
-        //       size: 20.sp,
-        //     ),
-        //   ),
-        // ),
+        GestureDetector(
+          onTap: () => Get.toNamed(Routes.newsListBySearch),
+          child: Container(
+            padding: EdgeInsets.all(8.w),
+            margin: EdgeInsets.all(8.w).copyWith(right: 12),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.4),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              HugeIcons.strokeRoundedSearch01,
+              color: Colors.white,
+              size: 20.sp,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -281,11 +283,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: MainNewsCard(
                   isBookmarked: news['is_bookmarked'] ?? false,
-                  image:
-                      news['featured_image']?.toString() ??
-                      'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+                  image: news['featured_image']?.toString() ?? '',
                   title: news['title']?.toString() ?? "-",
-                  date: news['date_published']?.toString() ?? "ऑगस्ट 19, 2025",
+                  date: news['date_published']?.toString() ?? "",
                   comment: news['comments_count']?.toString() ?? "0",
                   onTap: () async {
                     if (!await LocalStorage().isDemo()) {
@@ -356,11 +356,9 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: HorizontalNewsCard(
             isBookmarked: news['is_bookmarked'] ?? false,
-            image:
-                news['featured_image']?.toString() ??
-                'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+            image: news['featured_image']?.toString() ?? '',
             title: news['title']?.toString() ?? "-",
-            date: news['date_published']?.toString() ?? "ऑगस्ट 19, 2025",
+            date: news['date_published']?.toString() ?? "",
             comment: news['comments_count']?.toString() ?? "0",
             onTap: () async {
               if (!await LocalStorage().isDemo()) {
@@ -430,11 +428,9 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             child: CompactNewsCard(
               isBookmarked: news['is_bookmarked'] ?? false,
-              image:
-                  news['featured_image']?.toString() ??
-                  'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+              image: news['featured_image']?.toString() ?? '',
               title: news['title']?.toString() ?? "-",
-              date: news['date_published']?.toString() ?? "ऑगस्ट 19, 2025",
+              date: news['date_published']?.toString() ?? "",
               comment: news['comments_count']?.toString() ?? "0",
               onTap: () async {
                 if (!await LocalStorage().isDemo()) {
@@ -506,11 +502,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: OverlayNewsCard(
               width: 0.8.sw,
               isBookmarked: news['is_bookmarked'] ?? false,
-              image:
-                  news['featured_image']?.toString() ??
-                  'https://c.ndtvimg.com/2019-09/p92rlgf8_pune-floods-ani_625x300_26_September_19.jpg?downsize=545:307',
+              image: news['featured_image']?.toString() ?? '',
               title: news['title']?.toString() ?? "-",
-              date: news['date_published']?.toString() ?? "ऑगस्ट 19, 2025",
+              date: news['date_published']?.toString() ?? "",
               comment: news['comments_count']?.toString() ?? "0",
               onTap: () async {
                 if (!await LocalStorage().isDemo()) {

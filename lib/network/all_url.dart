@@ -33,7 +33,8 @@ class AllUrl {
   static const String newsDetails = '$baseUrl/news_details.php';
   static const String newsByCategory = '$baseUrl/get_news_by_category.php';
   static const String newsByTag = '$baseUrl/get_news_by_tag.php';
-  static const String newsBySearch = '$baseUrl/get_news_by_keyword.php';
+  // static const String newsBySearch = '$baseUrl/get_news_by_keyword.php';
+  static const String newsBySearch = '$baseUrl/global_search.php';
   static const String getNotification = '$baseUrl/get_notifications.php';
   static const String updateFirebaseToken =
       '$baseUrl/update_firebase_token.php';
