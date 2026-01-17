@@ -122,10 +122,10 @@ class _NewsListBySearchState extends State<NewsListBySearch> {
           filled: true,
           fillColor: Colors.white,
           hintText: hintText,
-          prefixIcon: HugeIcon(
-            icon: HugeIcons.strokeRoundedSearch01,
-            color: Colors.grey,
-          ),
+            prefixIcon: HugeIcon(
+              icon: HugeIcons.strokeRoundedSearch01,
+              color: Colors.grey,
+            ),
           suffixIcon: GestureDetector(
             onTap: () {
               controller.searchList.clear();
